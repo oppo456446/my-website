@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网站导航布局分析 - theporndude.com</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 全局样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* 容器样式 */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* 头部样式 */
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: #e74c3c;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin: 0 10px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 15px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        nav a:hover, nav a.active {
+            background-color: #e74c3c;
+        }
+        
+        .header-right {
+            display: flex;
+            align-items: center;
+        }
+        
+        .search-box {
+            position: relative;
+            margin-right: 15px;
+        }
+        
+        .search-box input {
+            padding: 8px 15px;
+            padding-right: 35px;
+            border: none;
+            border-radius: 20px;
+            outline: none;
+        }
+        
+        .search-box button {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #777;
+            cursor: pointer;
+        }
+        
+        .language-selector select {
+            padding: 8px;
+            border-radius: 4px;
+            border: none;
+            background-color: #34495e;
+            color: white;
+        }
+        
+        /* 主要内容区域 */
+        .main-content {
+            display: flex;
+            margin: 30px 0;
+        }
+        
+        .content {
+            flex: 3;
+            margin-right: 30px;
+        }
+        
+        .sidebar {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        /* 分类标题 */
+        .section-title {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e74c3c;
+            font-size: 22px;
+            color: #2c3e50;
+        }
+        
+        /* 卡片网格 */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .category-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-header {
+            padding: 15px;
+            background-color: #34495e;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .card-body {
+            padding: 20px;
+        }
+        
+        .website-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .website-item:last-child {
+            border-bottom: none;
+        }
+        
+        .website-thumb {
+            width: 50px;
+            height: 50px;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-right: 15px;
+            background-color: #f1f1f1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #777;
+            font-size: 24px;
+        }
+        
+        .website-info {
+            flex: 1;
+        }
+        
+        .website-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+        
+        .website-description {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .rating {
+            color: #f39c12;
+            font-size: 13px;
+        }
+        
+        /* 侧边栏样式 */
+        .sidebar-widget {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+        
+        .widget-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .popular-list {
+            list-style: none;
+        }
+        
+        .popular-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #f5f5f5;
+        }
+        
+        .popular-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .popular-list a {
+            color: #3498db;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .popular-list a:hover {
+            color: #e74c3c;
+        }
+        
+        .ad-container {
+            background: linear-gradient(135deg, #3498db, #8e44ad);
+            height: 300px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        /* 页脚样式 */
+        footer {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 40px 0 20px;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+            margin-bottom: 20px;
+            padding-right: 20px;
+        }
+        
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #e74c3c;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: #e74c3c;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .social-icons a {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            background: #34495e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+        
+        .social-icons a:hover {
+            background: #e74c3c;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #34495e;
+            font-size: 14px;
+            color: #95a5a6;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .content {
+                margin-right: 0;
+                margin-bottom: 30px;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo {
+                margin-bottom: 15px;
+            }
+            
+            nav {
+                margin: 15px 0;
+            }
+            
+            .header-right {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav li {
+                margin: 5px;
+            }
+            
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部区域 -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-compass"></i>
+                    <span>网站导航</span>
+                </div>
+                
+                <nav>
+                    <ul>
+                        <li><a href="#" class="active">首页</a></li>
+                        <li><a href="#">最新</a></li>
+                        <li><a href="#">热门</a></li>
+                        <li><a href="#">视频</a></li>
+                        <li><a href="#">图片</a></li>
+                        <li><a href="#">分类</a></li>
+                        <li><a href="#">论坛</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="header-right">
+                    <div class="search-box">
+                        <input type="text" placeholder="搜索网站...">
+                        <button><i class="fas fa-search"></i></button>
+                    </div>
+                    
+                    <div class="language-selector">
+                        <select>
+                            <option>English</option>
+                            <option>中文</option>
+                            <option>Español</option>
+                            <option>Français</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- 主体内容 -->
+    <div class="container">
+        <div class="main-content">
+            <!-- 主要内容区域 -->
+            <div class="content">
+                <h2 class="section-title">热门分类</h2>
+                
+                <div class="cards-grid">
+                    <!-- 分类卡片 1 -->
+                    <div class="category-card">
+                        <div class="card-header">
+                            <i class="fas fa-video"></i> 视频网站
+                        </div>
+                        <div class="card-body">
+                            <div class="website-item">
+                                <div class="website-thumb">
+                                    <i class="fab fa-youtube"></i>
+                                </div>
+                                <div class="website-info">
+                                    <div class="website-title">视频分享平台</div>
+                                    <div class="website-description">高清视频资源，每日更新</div>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                        4.5
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="website-item">
+                                <div class="website-thumb">
+                                    <i class="fas fa-film"></i>
+                                </div>
+                                <div class="website-info">
+                                    <div class="website-title">影视中心</div>
+                                    <div class="website-description">海量影视资源，多平台支持</div>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        4.0
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="website-item">
+                                <div class="website-thumb">
+                                    <i class="fas fa-play-circle"></i>
+                                </div>
+                                <div class="website-info">
+                                    <div class="website-title">流媒体服务</div>
+                                    <div class="website-description">高速缓冲，无广告体验</div>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        5.0
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 分类卡片 2 -->
+                    <div class="category-card">
+                        <div class="card-header">
+                            <i class="fas fa-camera"></i> 图片分享
+                        </div>
+                        <div class="card-body">
+                            <div class="website-item">
+                                <div class="website-thumb">
+                                    <i class="fas fa-images"></i>
+                                </div>
+                                <div class="website-info">
+                                    <div class="website-title">高清图库</div>
+                                    <div class="website-description">百万高清图片资源</div>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        4.0
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="website-item">
+                                <div class="website-thumb">
+                                    <i class="fas fa-portrait"></i>
+                                </div>
+                                <div class="website-info">
+                                    <div class="website-title">艺术摄影</div>
+                                    <div class="website-description">专业摄影师作品集</div>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                        4.5
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="website-item">
+                                <div class="website-thumb">
+                                    <i class="fas fa-mountain"></i>
+                                </div>
+                                <div class="website-info">
+                                    <div class="website-title">自然风光</div>
+                                    <div class="website-description">全球自然景观摄影</div>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        5.0
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 分类卡片 3 -->
+                    <div class="category-card">
+                        <div class="card-header">
+                            <i class="fas fa-users"></i> 社区论坛
+                        </div>
+                        <div class="card-body">
+                            <div class="website-item">
+                                <div class="website-thumb">
+                                    <i class="fas fa-comments"></i>
+                                </div>
+                                <div class="website-info">
+                                    <div class="website-title">综合讨论区</div>
+                                    <div class="website-description">热门话题，每日讨论</div>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                        4.5
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="website-item">
+                                <div class="website-thumb">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <div class="website-info">
+                                    <div class="website-title">技术支持</div>
+                                    <div class="website-description">问题解答与技术支持</div>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        4.0
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="website-item">
+                                <div class="website-thumb">
+                                    <i class="fas fa-newspaper"></i>
+                                </div>
+                                <div class="website-info">
+                                    <div class="website-title">新闻资讯</div>
+                                    <div class="website-description">行业动态与最新消息</div>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        5.0
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h2 class="section-title">最新添加</h2>
+                
+                <div class="cards-grid">
+                    <!-- 最新添加卡片 1 -->
+                    <div class="category-card">
+                        <div class="card-header">
+                            <i class="fas fa-gamepad"></i> 游戏娱乐
+                        </div>
+                        <div class="card-body">
+                            <div class="website-item">
+                                <div class="website-thumb">
+                                    <i class="fas fa-dice"></i>
+                                </div>
+                                <div class="website-info">
+                                    <div class="website-title">在线游戏平台</div>
+                                    <div class="website-description">多人在线游戏体验</div>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                        4.5
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 最新添加卡片 2 -->
+                    <div class="category-card">
+                        <div class="card-header">
+                            <i class="fas fa-shopping-cart"></i> 购物商城
+                        </div>
+                        <div class="card-body">
+                            <div class="website-item">
+                                <div class="website-thumb">
+                                    <i class="fas fa-gift"></i>
+                                </div>
+                                <div class="website-info">
+                                    <div class="website-title">精品购物</div>
+                                    <div class="website-description">精选商品，优惠促销</div>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        4.0
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 侧边栏 -->
+            <div class="sidebar">
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">热门网站</h3>
+                    <ul class="popular-list">
+                        <li><a href="#"><i class="fas fa-fire"></i> 今日热门网站</a></li>
+                        <li><a href="#"><i class="fas fa-trophy"></i> 本月最佳网站</a></li>
+                        <li><a href="#"><i class="fas fa-star"></i> 用户推荐网站</a></li>
+                        <li><a href="#"><i class="fas fa-bolt"></i> 快速访问网站</a></li>
+                        <li><a href="#"><i class="fas fa-history"></i> 经典网站</a></li>
+                    </ul>
+                </div>
+                
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">最新添加</h3>
+                    <ul class="popular-list">
+                        <li><a href="#"><i class="fas fa-plus-circle"></i> 新增游戏平台</a></li>
+                        <li><a href="#"><i class="fas fa-plus-circle"></i> 购物商城</a></li>
+                        <li><a href="#"><i class="fas fa-plus-circle"></i> 学习资源站</a></li>
+                        <li><a href="#"><i class="fas fa-plus-circle"></i> 健康生活网</a></li>
+                        <li><a href="#"><i class="fas fa-plus-circle"></i> 旅游指南</a></li>
+                    </ul>
+                </div>
+                
+                <div class="sidebar-widget">
+                    <div class="ad-container">
+                        <div>
+                            <i class="fas fa-ad"></i>
+                            <p>广告位招租</p>
+                            <p>联系: ads@example.com</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 页脚区域 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>关于我们</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">网站介绍</a></li>
+                        <li><a href="#">团队信息</a></li>
+                        <li><a href="#">发展历程</a></li>
+                        <li><a href="#">加入我们</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>帮助中心</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">使用指南</a></li>
+                        <li><a href="#">常见问题</a></li>
+                        <li><a href="#">提交反馈</a></li>
+                        <li><a href="#">网站地图</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>政策条款</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">隐私政策</a></li>
+                        <li><a href="#">服务条款</a></li>
+                        <li><a href="#">免责声明</a></li>
+                        <li><a href="#">版权声明</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>联系我们</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">客服邮箱</a></li>
+                        <li><a href="#">商务合作</a></li>
+                        <li><a href="#">广告咨询</a></li>
+                        <li><a href="#">举报投诉</a></li>
+                    </ul>
+                    
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 网站导航大全. 保留所有权利 | 本网站仅用于学习目的</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
