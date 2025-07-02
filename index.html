@@ -20,12 +20,21 @@
             color: #fff;
             min-height: 100vh;
             padding: 20px;
+            display: flex;
+            flex-direction: column;
         }
         
         .container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .main-content {
+            flex: 1;
         }
         
         /* 头部样式 */
@@ -89,6 +98,13 @@
             font-size: 1rem;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.3);
         }
         
         .search-box input::placeholder {
@@ -106,6 +122,12 @@
             cursor: pointer;
             font-size: 1.2rem;
             padding: 5px 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .search-box button:hover {
+            color: #ffd166;
+            transform: translateY(-50%) scale(1.1);
         }
         
         /* 主内容区样式 */
@@ -184,12 +206,29 @@
             transition: all 0.2s ease;
             border: 1px solid transparent;
             gap: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .link-item::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: all 0.6s;
         }
         
         .link-item:hover {
             background: rgba(255, 255, 255, 0.1);
             transform: translateX(5px);
             border-color: rgba(255, 255, 255, 0.15);
+        }
+        
+        .link-item:hover::before {
+            left: 100%;
         }
         
         .link-icon {
@@ -202,12 +241,23 @@
             border-radius: 10px;
             font-size: 20px;
             color: #ffd166;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .link-item:hover .link-icon {
+            transform: scale(1.1);
+            color: #fff;
+            background: rgba(0, 0, 0, 0.5);
         }
         
         .link-text {
             flex: 1;
             font-size: 1.1rem;
             font-weight: 500;
+            position: relative;
+            z-index: 1;
         }
         
         .link-item a {
@@ -233,6 +283,19 @@
             box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .footer-note::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #ff8a00, #e52e71, #22c1c3);
         }
         
         .footer-note p {
@@ -254,6 +317,17 @@
         .stat-item {
             text-align: center;
             min-width: 100px;
+            position: relative;
+            padding: 15px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-item:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
         .stat-value {
@@ -303,6 +377,7 @@
             
             .stat-item {
                 min-width: 80px;
+                padding: 10px;
             }
             
             .stat-value {
@@ -331,30 +406,59 @@
         .footer-note {
             animation: fadeIn 0.8s ease-out;
         }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .stat-item:hover {
+            animation: float 2s ease-in-out infinite;
+        }
+        
+        /* 新增：页脚固定样式 */
+        footer {
+            margin-top: auto;
+            padding: 20px 0;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .copyright {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1><i class="fas fa-star"></i> 网站目录门户</h1>
-            <p class="subtitle">精心筛选1000+优质网站资源，为您提供高效便捷的网络导航服务</p>
+        <div class="main-content">
+            <header>
+                <h1><i class="fas fa-star"></i> 网站目录门户</h1>
+                <p class="subtitle">精心筛选1000+优质网站资源，为您提供高效便捷的网络导航服务</p>
+                
+                <div class="search-box">
+                    <input type="text" placeholder="搜索网站资源...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+            </header>
             
-            <div class="search-box">
-                <input type="text" placeholder="搜索网站资源...">
-                <button><i class="fas fa-search"></i></button>
-            </div>
-        </header>
-        
-        <div class="row">
+            <div class="row">
             <!-- 【版块一】 -->
             <div class="panel">
                 <div class="panel-header">
-                    <i class="fas fa-search"></i> 免费色情视频网站
+                    <i class="fas fa-video"></i> 免费色情视频网站
                 </div>
                 <div class="panel-content">
                     <!-- 示例1 -->
                     <div class="link-item">
-                        <div class="link-icon"><i class="fab fa-chrome"></i></div>
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
                         <div class="link-text">
                             <a href="https://www.pornhub.com/?ref=porndude" target="_blank">pornhub</a>
                         </div>
@@ -362,7 +466,7 @@
                     
                     <!-- 示例2 -->
                     <div class="link-item">
-                        <div class="link-icon"><i class="fas fa-dog"></i></div>
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
                         <div class="link-text">
                             <a href="https://pdude.link/xvideos" target="_blank">xvideos</a>
                         </div>
@@ -370,7 +474,7 @@
                     
                     <!-- 示例3 -->
                     <div class="link-item">
-                        <div class="link-icon"><i class="fab fa-google"></i></div>
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
                         <div class="link-text">
                             <a href="https://xhamster.com/" target="_blank">xhamster</a>
                         </div>
@@ -378,7 +482,7 @@
                     
                     <!-- 示例4 -->
                     <div class="link-item">
-                        <div class="link-icon"><i class="fab fa-qq"></i></div>
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
                         <div class="link-text">
                             <a href="https://www.xnxx.com/" target="_blank">xnxx</a>
                         </div>
@@ -386,56 +490,56 @@
                     
                     <!-- 添加更多模块示例 -->
                     <div class="link-item">
-                        <div class="link-icon"><i class="fas fa-compass"></i></div>
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
                         <div class="link-text">
                             <a href="https://www.epbeast.com/" target="_blank">epbeast</a>
                         </div>
                     </div>
                     
                     <div class="link-item">
-                        <div class="link-icon"><i class="fas fa-fire"></i></div>
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
                         <div class="link-text">
                             <a href="https://hqporner.com/" target="_blank">hqporner</a>
                         </div>
                     </div>
                     
                     <div class="link-item">
-                        <div class="link-icon"><i class="fab fa-edge"></i></div>
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
                         <div class="link-text">
                             <a href="https://beeg.com/" target="_blank">beeg</a>
                         </div>
                     </div>
                     
                     <div class="link-item">
-                        <div class="link-icon"><i class="fas fa-otter"></i></div>
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
                         <div class="link-text">
                             <a href="https://sxyprn.com/" target="_blank">sxyprn</a>
                         </div>
                     </div>
                     
                     <div class="link-item">
-                        <div class="link-icon"><i class="fas fa-braille"></i></div>
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
                         <div class="link-text">
                             <a href="https://spankbang.com/" target="_blank">spankbang</a>
                         </div>
                     </div>
                     
                     <div class="link-item">
-                        <div class="link-icon"><i class="fas fa-feather"></i></div>
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
                         <div class="link-text">
                             <a href="https://www.porntrex.com/" target="_blank">porntrex</a>
                         </div>
                     </div>
                     
                     <div class="link-item">
-                        <div class="link-icon"><i class="fas fa-search-plus"></i></div>
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
                         <div class="link-text">
                             <a href="https://xmoviesforyou.com/" target="_blank">xmoviesforyou.com</a>
                         </div>
                     </div>
                     
                     <div class="link-item">
-                        <div class="link-icon"><i class="fas fa-globe-asia"></i></div>
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
                         <div class="link-text">
                             <a href="https://www.porngo.com/" target="_blank">porngo</a>
                         </div>
@@ -451,7 +555,7 @@
                 <div class="panel-content">
                     <!-- 示例1 -->
                     <div class="link-item">
-                        <div class="link-icon"><i class="fab fa-tiktok"></i></div>
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
                         <div class="link-text">
                             <a href="https://pdude.link/jinpingmeistripping" target="_blank">金瓶梅脱衣</a>
                         </div>
@@ -459,7 +563,7 @@
                     
                     <!-- 示例2 -->
                     <div class="link-item">
-                        <div class="link-icon"><i class="fas fa-bolt"></i></div>
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
                         <div class="link-text">
                             <a href="https://pdude.link/nudeai" target="_blank">AI脱衣</a>
                         </div>
@@ -467,7 +571,7 @@
                     
                     <!-- 示例3 -->
                     <div class="link-item">
-                        <div class="link-icon"><i class="fas fa-play-circle"></i></div>
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
                         <div class="link-text">
                             <a href="https://pdude.link/nakedbodyai" target="_blank">果体AI</a>
                         </div>
@@ -475,7 +579,7 @@
                     
                     <!-- PornJoy -->
                     <div class="link-item">
-                        <div class="link-icon"><i class="fas fa-fire"></i></div>
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
                         <div class="link-text">
                             <a href="https://pdude.link/pornjoyzh" target="_blank">PornJoy</a>
                         </div>
@@ -483,56 +587,56 @@
                     
                     <!-- 添加更多模块示例 -->
                     <div class="link-item">
-                        <div class="link-icon"><i class="fab fa-youtube"></i></div>
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
                         <div class="link-text">
                             <a href="https://pdude.link/aihougong" target="_blank">AI后宫</a>
                         </div>
                     </div>
                     
                     <div class="link-item">
-                        <div class="link-icon"><i class="fab fa-instagram"></i></div>
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
                         <div class="link-text">
                             <a href="https://pdude.link/meimoai" target="_blank">Modu Box</a>
                         </div>
                     </div>
                     
                     <div class="link-item">
-                        <div class="link-icon"><i class="fab fa-snapchat"></i></div>
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
                         <div class="link-text">
                             <a href="https://pdude.link/shanjierenyi" target="_blank">善解人衣</a>
                         </div>
                     </div>
                     
                     <div class="link-item">
-                        <div class="link-icon"><i class="fas fa-film"></i></div>
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
                         <div class="link-text">
                             <a href="https://pdude.link/aituoyi" target="_blank">ai脱衣网</a>
                         </div>
                     </div>
                     
                     <div class="link-item">
-                        <div class="link-icon"><i class="fas fa-video-slash"></i></div>
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
                         <div class="link-text">
                             <a href="https://pdude.link/aifengyue-review" target="_blank">AI风月</a>
                         </div>
                     </div>
                     
                     <div class="link-item">
-                        <div class="link-icon"><i class="fas fa-video"></i></div>
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
                         <div class="link-text">
                             <a href="https://pdude.link/aigeneratedav-review" target="_blank">AI生成AV</a>
                         </div>
                     </div>
                     
                     <div class="link-item">
-                        <div class="link-icon"><i class="fab fa-vimeo-v"></i></div>
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
                         <div class="link-text">
                             <a href="https://pdude.link/parallel-world-ai-girlfriend-review" target="_blank">平行世界AI女友</a>
                         </div>
                     </div>
                     
                     <div class="link-item">
-                        <div class="link-icon"><i class="fas fa-music"></i></div>
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
                         <div class="link-text">
                             <a href="https://theporndude.com/zh/13104/candyai" target="_blank">Candy AI</a>
                         </div>
@@ -543,12 +647,12 @@
             <!-- 【版块三】 -->
             <div class="panel">
                 <div class="panel-header">
-                    <i class="fas fa-cube"></i> 情色视频直播网站
+                    <i class="fas fa-video"></i> 情色视频直播网站
                 </div>
                 <div class="panel-content">
                     <!-- 示例1 -->
                     <div class="link-item">
-                        <div class="link-icon"><i class="fas fa-cloud"></i></div>
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
                         <div class="link-text">
                             <a href="https://pdude.link/uuzhtw" target="_blank">台湾UU直播</a>
                         </div>
@@ -556,7 +660,7 @@
                     
                     <!-- 示例2 -->
                     <div class="link-item">
-                        <div class="link-icon"><i class="fas fa-lock"></i></div>
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
                         <div class="link-text">
                             <a href="https://pdude.link/qbaby" target="_blank">QBABY真人視訊</a>
                         </div>
@@ -564,7 +668,7 @@
                     
                     <!-- 示例3 -->
                     <div class="link-item">
-                        <div class="link-icon"><i class="fas fa-paint-brush"></i></div>
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
                         <div class="link-text">
                             <a href="https://pdude.link/uthome" target="_blank">UThome (UT聊天室)</a>
                         </div>
@@ -572,7 +676,7 @@
                     
                     <!-- 示例4 -->
                     <div class="link-item">
-                        <div class="link-icon"><i class="fas fa-code"></i></div>
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
                         <div class="link-text">
                             <a href="https://pdude.link/swag" target="_blank">SWAG</a>
                         </div>
@@ -580,87 +684,757 @@
                     
                     <!-- 添加更多模块示例 -->
                     <div class="link-item">
-                        <div class="link-icon"><i class="fas fa-file-pdf"></i></div>
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
                         <div class="link-text">
                             <a href="https://pdude.link/colorboxlivebroadcast" target="_blank">色盒直播</a>
                         </div>
                     </div>
                     
                     <div class="link-item">
-                        <div class="link-icon"><i class="fas fa-comments"></i></div>
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
                         <div class="link-text">
                             <a href="https://pdude.link/showlive" target="_blank">ShowLive美女直播</a>
                         </div>
                     </div>
                     
                     <div class="link-item">
-                        <div class="link-icon"><i class="fas fa-calendar-alt"></i></div>
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
                         <div class="link-text">
                             <a href="https://pdude.link/icebook" target="_blank">自由鸟直播</a>
                         </div>
                     </div>
                     
                     <div class="link-item">
-                        <div class="link-icon"><i class="fas fa-map-marked-alt"></i></div>
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
                         <div class="link-text">
                             <a href="https://pdude.link/mangkhutlive" target="_blank">山竹直播</a>
                         </div>
                     </div>
                     
                     <div class="link-item">
-                        <div class="link-icon"><i class="fas fa-language"></i></div>
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
                         <div class="link-text">
                             <a href="https://pdude.link/91livepassionateinteraction" target="_blank">91直播 激情互动</a>
                         </div>
                     </div>
                     
                     <div class="link-item">
-                        <div class="link-icon"><i class="fas fa-shopping-cart"></i></div>
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
                         <div class="link-text">
                             <a href="https://pdude.link/camsoda" target="_blank">CamSoda</a>
                         </div>
                     </div>
                     
                     <div class="link-item">
-                        <div class="link-icon"><i class="fas fa-plane"></i></div>
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
                         <div class="link-text">
                             <a href="https://pdude.link/stripchat" target="_blank">StripChat</a>
                         </div>
                     </div>
                     
                     <div class="link-item">
-                        <div class="link-icon"><i class="fas fa-chart-line"></i></div>
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
                         <div class="link-text">
                             <a href="https://pdude.link/sinparty" target="_blank">SinParty</a>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        
-        <!-- 页脚部分 -->
-        <div class="footer-note">
-            <p>© 2023 网站目录门户 | 精心筛选1000+优质网站资源</p>
-            <div class="stats">
-                <div class="stat-item">
-                    <div class="stat-value">1000+</div>
-                    <div class="stat-label">优质网站</div>
+
+            <!-- 【版块四】 -->
+            <div class="panel">
+                <div class="panel-header">
+                    <i class="fas fa-video"></i> 最好的付费色情网站
                 </div>
-                <div class="stat-item">
-                    <div class="stat-value">24</div>
-                    <div class="stat-label">资源分类</div>
+                <div class="panel-content">
+                    <!-- 示例1 -->
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://pdude.link/dsdcam" target="_blank">懂色帝</a>
+                        </div>
+                    </div>
+                      
+                    <!-- 添加更多模块示例 -->
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://pdude.link/iqqtv" target="_blank">iQQTV</a>
+                        </div>
+                    </div>
+                    
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://pdude.link/modelmedia" target="_blank">麻豆APP</a>
+                        </div>
+                    </div>
+                    
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://pdude.link/ririri" target="_blank">SWAG合集</a>
+                        </div>
+                    </div>
+                    
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://pdude.link/sosopa" target="_blank">搜搜啪</a>
+                        </div>
+                    </div>
+                    
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://pdude.link/thdh" target="_blank">探花视频</a>
+                        </div>
+                    </div>
+                    
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://pdude.link/19jtv" target="_blank">韩国直播</a>
+                        </div>
+                    </div>
+                    
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://pdude.link/thepornyzh" target="_blank">国产传媒全集</a>
+                        </div>
+                    </div>
+                    
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://pdude.link/xiaoou" target="_blank">小欧视频</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://pdude.link/loiship" target="_blank">LOIBUS萝莉巴士</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://pdude.link/pornshop" target="_blank">中国p站</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://pdude.link/porntubecool" target="_blank">中国小视频</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://pdude.link/hstv" target="_blank">好色TV</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://pdude.link/fulizy" target="_blank">法老资源网</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://pdude.link/asiatime" target="_blank">草榴社区</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://pdude.link/996fuli?ref=porndude" target="_blank">996福利社</a>
+                        </div>
+                    </div>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-value">96.5%</div>
-                    <div class="stat-label">用户满意度</div>
+            </div>
+
+            <!-- 【版块五】 -->
+            <div class="panel">
+                <div class="panel-header">
+                    <i class="fas fa-video"></i> 抖音色情网站
                 </div>
-                <div class="stat-item">
-                    <div class="stat-value">每日</div>
-                    <div class="stat-label">更新维护</div>
+                <div class="panel-content">
+                    <!-- 示例1 -->
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://fikfap.com/" target="_blank">FikFap</a>
+                        </div>
+                    </div>
+                      
+                    <!-- 添加更多模块示例 -->
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://fyptt.to/" target="_blank">FYPTT</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://tik.porn/" target="_blank">Tik Porn</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://www.xfree.com/" target="_blank">xfree</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://pdude.link/kwiky" target="_blank">Kwiky</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://theporndude.com/zh/7849/xxxtik" target="_blank">XXXTik</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://theporndude.com/zh/10995/xfollow" target="_blank">XXX Follow</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://theporndude.com/zh/12864/ogfap" target="_blank">OGFAP</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://theporndude.com/zh/12617/avrebo" target="_blank">AVrebo</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://theporndude.com/zh/3819/sharesome" target="_blank">Sharesome</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 【版块六】 -->
+            <div class="panel">
+                <div class="panel-header">
+                    <i class="fas fa-video"></i> 裸体网站
+                </div>
+                <div class="panel-content">
+                    <!-- 示例1 -->
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://pdude.link/jablehk?ref=porndude" target="_blank">JableHK</a>
+                        </div>
+                    </div>
+                      
+                    <!-- 添加更多模块示例 -->
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://fapello.com/" target="_blank">Fapello</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://simpcity.su/" target="_blank">SimpCity</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://coomer.su/" target="_blank">Coomer Party</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://erothots.co/" target="_blank">EroThots</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://www.xxbrits.com/" target="_blank">XXBrits</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://influencersgonewild.com/" target="_blank">Influencers Gone Wild</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://dirtyship.com/" target="_blank">DirtyShip</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://porntn.com/" target="_blank">PornTN</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://thothub.to/" target="_blank">ThotHub</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 【版块七】 -->
+            <div class="panel">
+                <div class="panel-header">
+                    <i class="fas fa-video"></i> 虚拟现实色情网站
+                </div>
+                <div class="panel-content">
+                    <!-- 示例1 -->
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://pdude.link/sexlikerealjav?ref=porndude" target="_blank">SexLikeReal JAV</a>
+                        </div>
+                    </div>
+                      
+                    <!-- 添加更多模块示例 -->
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://pdude.link/jvrporn" target="_blank">JVRPorn</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://pdude.link/virtualrealjapan" target="_blank">VirtualRealJapan</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://pdude.link/vrporn" target="_blank">VRPorn</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://theporndude.com/zh/5620/povr" target="_blank">POVR</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://pdude.link/badoinkvr" target="_blank">BaDoinkVR</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://pdude.link/virtualrealporn" target="_blank">VirtualRealPorn</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://theporndude.com/zh/1705/naughtyamericavr" target="_blank">Naughty America VR</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 【版块八】 -->
+            <div class="panel">
+                <div class="panel-header">
+                    <i class="fas fa-video"></i> 素人色情网站
+                </div>
+                <div class="panel-content">
+                    <!-- 示例1 -->
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://pdude.link/xchina?ref=porndude" target="_blank">中国原创</a>
+                        </div>
+                    </div>
+                      
+                    <!-- 添加更多模块示例 -->
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://pdude.link/soupheadlines" target="_blank">汤头条</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://theporndude.com/zh/6247/porndudecasting" target="_blank">PornDudeCasting</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://theporndude.com/zh/4632/exploitedcollegegirls" target="_blank">Exploited College Girls</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://theporndude.com/zh/2063/netvideogirls" target="_blank">NetVideoGirls</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://theporndude.com/zh/2272/trueamateurs" target="_blank">True Amateurs</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://theporndude.com/zh/2062/backroomcastingcouch" target="_blank">Backroom Casting Couch</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://theporndude.com/zh/930/bangbus" target="_blank">BangBus</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 【版块九】 -->
+            <div class="panel">
+                <div class="panel-header">
+                    <i class="fas fa-video"></i> 亚洲色情网站
+                </div>
+                <div class="panel-content">
+                    <!-- 示例1 -->
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://jable.tv/" target="_blank">Jable</a>
+                        </div>
+                    </div>
+                      
+                    <!-- 添加更多模块示例 -->
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://netflav.com/" target="_blank">Netflav</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="http://18av.mm-cg.com/" target="_blank">18AV</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://www.pornbest.org/" target="_blank">PornBest</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://porn87.com/" target="_blank">Porn87</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://goodav17.com/" target="_blank">正妹AV</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://av6k.com/" target="_blank">AV6K</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://www.buzzav.com/" target="_blank">BuzzAV</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 【版块十】 -->
+            <div class="panel">
+                <div class="panel-header">
+                    <i class="fas fa-video"></i> 成人动漫色情网站
+                </div>
+                <div class="panel-content">
+                    <!-- 示例1 -->
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://rule34.xxx/" target="_blank">Rule 34</a>
+                        </div>
+                    </div>
+                      
+                    <!-- 添加更多模块示例 -->
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://kemono.su/" target="_blank">Kemono Party</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://e-hentai.org/" target="_blank">E-Hentai</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://e621.net/" target="_blank">E621</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://www.furaffinity.net/" target="_blank">FurAffinity</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://gelbooru.com/" target="_blank">Gelbooru</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://rule34.paheal.net/" target="_blank">Rule 34 Paheal</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 【版块十一】 -->
+            <div class="panel">
+                <div class="panel-header">
+                    <i class="fas fa-video"></i> 成人动漫在线播放网站
+                </div>
+                <div class="panel-content">
+                    <!-- 示例1 -->
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://hanime1.me/" target="_blank">H动漫</a>
+                        </div>
+                    </div>
+                      
+                    <!-- 添加更多模块示例 -->
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://www.hanime.xyz/" target="_blank">H动漫网</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://h2.h18ani5.pro/h%E4%BA%8C/" target="_blank">H二次元动画</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://lop102.xyz/" target="_blank">樱花动漫</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://h-ciyuan.com/" target="_blank">H次元</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://18hdm.com/" target="_blank">H动漫精选</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 【版块十二】 -->
+            <div class="panel">
+                <div class="panel-header">
+                    <i class="fas fa-video"></i> 最好的色情游戏
+                </div>
+                <div class="panel-content">
+                    <!-- 示例1 -->
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://pdude.link/adultgamingplatform" target="_blank">成人遊戲平台</a>
+                        </div>
+                    </div>
+                      
+                    <!-- 添加更多模块示例 -->
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://pdude.link/ior18" target="_blank">工口 R18 成人遊戲平台</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://pdude.link/pxx8888" target="_blank">illusion中国官网</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://pdude.link/luyouji" target="_blank">陆游记</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://pdude.link/iiacg01" target="_blank">ACG十八禁游戏</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://pdude.link/erolabs" target="_blank">EroLabs</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://pdude.link/asacg01" target="_blank">萌玩ACG</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://pdude.link/thelegendofthethreekingdoms" target="_blank">三国御女传</a>
+                        </div>
+                    </div>
+
+                    <div class="link-item">
+                        <div class="link-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="link-text">
+                            <a href="https://pdude.link/dimensionaltravel" target="_blank">次元穿越</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 页脚部分 -->
+            <div class="footer-note">
+                <p>© 2023 网站目录门户 | 精心筛选1000+优质网站资源</p>
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-value">1280+</div>
+                        <div class="stat-label">优质网站</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">24</div>
+                        <div class="stat-label">资源分类</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">96.5%</div>
+                        <div class="stat-label">用户满意度</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">每日</div>
+                        <div class="stat-label">更新维护</div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    
+    <footer>
+        <div class="copyright">
+            <p>© 2023 网站目录门户 - 所有权利保留 | 联系我们 Telegram：@caicai8932</p>
+        </div>
+    </footer>
     
     <script>
         // 添加悬停效果增强
@@ -690,6 +1464,28 @@
             if (e.key === 'Enter' && this.value.trim() !== '') {
                 alert(`搜索内容: ${this.value}\n在实际应用中，这里将执行搜索功能`);
             }
+        });
+        
+        // 添加面板悬停效果
+        document.querySelectorAll('.panel').forEach(panel => {
+            panel.addEventListener('mouseenter', function() {
+                this.style.zIndex = '10';
+            });
+            
+            panel.addEventListener('mouseleave', function() {
+                this.style.zIndex = '1';
+            });
+        });
+        
+        // 统计项悬浮动画
+        document.querySelectorAll('.stat-item').forEach(stat => {
+            stat.addEventListener('mouseenter', function() {
+                this.style.animation = 'float 2s ease-in-out infinite';
+            });
+            
+            stat.addEventListener('mouseleave', function() {
+                this.style.animation = 'none';
+            });
         });
     </script>
 </body>
