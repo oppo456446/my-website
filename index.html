@@ -80,40 +80,64 @@
             color: #e0e0e0;
         }
         
-        /* 滚动文字样式 */
-        .scrolling-text-container {
+        /* 新的滚动文字样式 */
+        .scrolling-container {
             max-width: 600px;
-            margin: 0 auto;
-            position: relative;
             height: 60px;
-            overflow: hidden;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(5px);
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 50px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .scrolling-text {
-            position: absolute;
-            width: 100%;
-            height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
-            color: rgba(255, 255, 255, 0.9);
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+        }
+        
+        .scrolling-text {
+            font-size: 1.4rem;
+            font-weight: bold;
             white-space: nowrap;
-            animation: scrollText 15s linear infinite;
+            padding: 0 20px;
+            animation: scrollText 50s linear infinite;【修改字体滚动速度 - 值越大越慢，越小越快】
+            background: linear-gradient(90deg, 
+                #ff0000, #ff8000, #ffff00, 
+                #80ff00, #00ff80, #00ffff, 
+                #0080ff, #0000ff, #8000ff, 
+                #ff00ff, #ff0080, #ff0000);
+            background-size: 2000% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+            text-shadow: 0 0 10px rgba(255,255,255,0.2);
+        }
+        
+        .scrolling-text::after {
+            content: "✨";
+            position: absolute;
+            top: -8px;
+            right: -25px;
+            animation: sparkle 2s infinite;
         }
         
         @keyframes scrollText {
             0% {
                 transform: translateX(100%);
+                background-position: 0% 50%;
             }
             100% {
                 transform: translateX(-100%);
+                background-position: 100% 50%;
             }
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { opacity: 0.5; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
         }
         
         /* 主内容区样式 */
@@ -189,7 +213,7 @@
             border-radius: 10px;
             display: flex;
             align-items: center;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             border: 1px solid transparent;
             gap: 12px;
             position: relative;
@@ -226,16 +250,24 @@
             background: rgba(0, 0, 0, 0.3);
             border-radius: 10px;
             font-size: 20px;
-            color: #ffd166;
-            transition: all 0.3s ease;
+            color: #ffd166; /* 默认黄色 */
+            transition: all 0.5s ease;
             position: relative;
             z-index: 1;
         }
         
+        /* 悬停时图标七彩效果 */
         .link-item:hover .link-icon {
             transform: scale(1.1);
-            color: #fff;
             background: rgba(0, 0, 0, 0.5);
+            color: transparent;
+            background: linear-gradient(45deg, 
+                #ff0000, #ff8000, #ffff00, 
+                #80ff00, #00ff80, #00ffff, 
+                #0080ff, #0000ff, #8000ff, 
+                #ff00ff, #ff0080, #ff0000);
+            background-size: 300% 300%;
+            animation: rainbow 3s ease infinite;
         }
         
         .link-text {
@@ -244,10 +276,26 @@
             font-weight: 500;
             position: relative;
             z-index: 1;
+            color: #ffd166; /* 默认黄色 */
+            transition: all 0.5s ease;
+        }
+        
+        /* 悬停时文字七彩效果 */
+        .link-item:hover .link-text {
+            color: transparent;
+            background: linear-gradient(90deg, 
+                #ff0000, #ff8000, #ffff00, 
+                #80ff00, #00ff80, #00ffff, 
+                #0080ff, #0000ff, #8000ff, 
+                #ff00ff, #ff0080, #ff0000);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: rainbowText 3s linear infinite;
         }
         
         .link-item a {
-            color: #fff;
+            color: inherit;
             text-decoration: none;
             display: flex;
             align-items: center;
@@ -255,8 +303,16 @@
             gap: 12px;
         }
         
-        .link-item a:hover {
-            color: #ffd166;
+        /* 彩虹动画效果 */
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes rainbowText {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
         }
         
         /* 页脚样式 */
@@ -371,7 +427,7 @@
             }
             
             .scrolling-text {
-                font-size: 1rem;
+                font-size: 1.1rem;
             }
         }
         
@@ -424,6 +480,16 @@
             margin: 0 auto;
             padding: 0 20px;
         }
+        
+        /* 新增标题动画 */
+        h1 {
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes titleGlow {
+            0% { text-shadow: 0 0 5px rgba(255,209,102,0.5); }
+            100% { text-shadow: 0 0 20px rgba(255,209,102,0.8), 0 0 30px rgba(255,209,102,0.6); }
+        }
     </style>
 </head>
 <body>
@@ -431,12 +497,12 @@
         <div class="main-content">
             <header>
                 <h1><i class="fas fa-star"></i> 网站目录门户</h1>
-                <p class="subtitle">精心筛选1000+优质网站资源，为您提供高效便捷的网络导航服务</p>
+                <p class="subtitle">精心筛选1000+优质网站资源，为您提供高效便捷的网络导航服务！</p>
                 
-                <!-- 替换为滚动文字 -->
-                <div class="scrolling-text-container">
+                <!-- 滚动文字 -->
+                <div class="scrolling-container">
                     <div class="scrolling-text">
-                        <span>📢  📢  📢 由于国内网络限制和浏览器屏蔽，导致部分网站无法访问，建议跟换谷歌浏览器或Edge浏览器，下载VPN，切换到国外网络，即可浏览所有网站 ！！！</span>
+                        📢  📢  📢 由于国内网络限制和浏览器屏蔽，导致部分网站无法访问，建议更换谷歌浏览器或Edge浏览器，下载VPN，切换到国外网络，即可浏览所有网站内容 ！！！
                     </div>
                 </div>
             </header>
@@ -1397,10 +1463,9 @@
                 </div>
             </div>
                     
-            
             <!-- 页脚部分 -->
             <div class="footer-note">
-                <p>💚 最全的网站。 所有的网站都经过测试，安全且便于寻找！</p>
+                <p>💚 最全的网站。 所有的网站都经过测试，安全且便于寻找 💚</p>
                 <div class="stats">
                     <div class="stat-item">
                         <div class="stat-value">1280+</div>
@@ -1423,18 +1488,18 @@
         </div>
     </div>
     
-<footer>
-    <div class="copyright">
-        <p>© 2023 网站目录门户 - 所有权利保留 | 联系我们 
-            <a href="https://t.me/caicai8932" style="text-decoration:none">
-                <svg width="16" height="16" viewBox="0 0 24 24" style="vertical-align:middle;margin:0 2px" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5.894 8.221l-1.97 9.28c-.145.627-.537.814-1.084.508l-3-2.21-1.446 1.394c-.14.14-.26.26-.428.26l.213-3.05 5.56-5.022c.22-.196-.048-.298-.346-.108l-6.87 4.326-2.96-.924c-.64-.203-.658-.64.135-.953l11.57-4.458c.538-.196 1.006.128.832.941z" fill="#0088cc"/>
-                </svg>
-                @caicai8932
-            </a>
-        </p>
-    </div>
-</footer>
+    <footer>
+        <div class="copyright">
+            <p>© 2023 七彩导航门户 - 所有权利保留 | 联系我们 
+                <a href="https://t.me/caicai8932" style="text-decoration:none">
+                    <svg width="16" height="16" viewBox="0 0 24 24" style="vertical-align:middle;margin:0 2px" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5.894 8.221l-1.97 9.28c-.145.627-.537.814-1.084.508l-3-2.21-1.446 1.394c-.14.14-.26.26-.428.26l.213-3.05 5.56-5.022c.22-.196-.048-.298-.346-.108l-6.87 4.326-2.96-.924c-.64-.203-.658-.64.135-.953l11.57-4.458c.538-.196 1.006.128.832.941z" fill="#0088cc"/>
+                    </svg>
+                    @caicai8932
+                </a>
+            </p>
+        </div>
+    </footer>
     
     <script>
         // 添加悬停效果增强
@@ -1469,7 +1534,34 @@
                 this.style.animation = 'none';
             });
         });
-        });
+        
+        // 为滚动文字添加随机颜色变化
+        const scrollingText = document.querySelector('.scrolling-text');
+        let hue = 0;
+        
+        setInterval(() => {
+            hue = (hue + 1) % 360;
+            scrollingText.style.background = `linear-gradient(90deg, 
+                hsl(${hue}, 100%, 50%), 
+                hsl(${(hue + 30) % 360}, 100%, 50%), 
+                hsl(${(hue + 60) % 360}, 100%, 50%), 
+                hsl(${(hue + 90) % 360}, 100%, 50%), 
+                hsl(${(hue + 120) % 360}, 100%, 50%), 
+                hsl(${(hue + 150) % 360}, 100%, 50%))`;
+            scrollingText.style.backgroundSize = "2000% 100%";
+            scrollingText.style.webkitBackgroundClip = "text";
+            scrollingText.style.backgroundClip = "text";
+        }, 100);
+        
+        // 添加标题动画效果
+        const title = document.querySelector('h1');
+        setInterval(() => {
+            title.style.background = `linear-gradient(90deg, 
+                hsl(${Math.random() * 360}, 100%, 70%), 
+                hsl(${Math.random() * 360}, 100%, 70%), 
+                hsl(${Math.random() * 360}, 100%, 70%))`;
+            title.style.backgroundClip = "text";
+        }, 3000);
     </script>
 </body>
 </html>
