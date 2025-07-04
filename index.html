@@ -80,54 +80,40 @@
             color: #e0e0e0;
         }
         
-        .search-box {
+        /* 滚动文字样式 */
+        .scrolling-text-container {
             max-width: 600px;
             margin: 0 auto;
             position: relative;
-        }
-        
-        .search-box input {
-            width: 100%;
-            padding: 14px 20px;
-            padding-right: 50px;
-            border-radius: 50px;
-            border: none;
+            height: 60px;
+            overflow: hidden;
             background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(5px);
-            color: white;
-            font-size: 1rem;
+            border-radius: 50px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
         }
         
-        .search-box input:focus {
-            outline: none;
-            background: rgba(255, 255, 255, 0.25);
-            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.3);
-        }
-        
-        .search-box input::placeholder {
-            color: rgba(255, 255, 255, 0.7);
-        }
-        
-        .search-box button {
+        .scrolling-text {
             position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: transparent;
-            border: none;
-            color: rgba(255, 255, 255, 0.8);
-            cursor: pointer;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 1.2rem;
-            padding: 5px 10px;
-            transition: all 0.3s ease;
+            color: rgba(255, 255, 255, 0.9);
+            white-space: nowrap;
+            animation: scrollText 15s linear infinite;
         }
         
-        .search-box button:hover {
-            color: #ffd166;
-            transform: translateY(-50%) scale(1.1);
+        @keyframes scrollText {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
         }
         
         /* 主内容区样式 */
@@ -383,6 +369,10 @@
             .stat-value {
                 font-size: 1.6rem;
             }
+            
+            .scrolling-text {
+                font-size: 1rem;
+            }
         }
         
         /* 动画效果 */
@@ -443,9 +433,11 @@
                 <h1><i class="fas fa-star"></i> 网站目录门户</h1>
                 <p class="subtitle">精心筛选1000+优质网站资源，为您提供高效便捷的网络导航服务</p>
                 
-                <div class="search-box">
-                    <input type="text" placeholder="搜索网站资源...">
-                    <button><i class="fas fa-search"></i></button>
+                <!-- 替换为滚动文字 -->
+                <div class="scrolling-text-container">
+                    <div class="scrolling-text">
+                        <span>📢  📢  📢 由于国内网络限制和浏览器屏蔽，导致部分网站无法访问，建议跟换谷歌浏览器或Edge浏览器，下载VPN，切换到国外网络，即可浏览所有网站 ！！！</span>
+                    </div>
                 </div>
             </header>
             
@@ -1404,10 +1396,11 @@
                     </div>
                 </div>
             </div>
+                    
             
             <!-- 页脚部分 -->
             <div class="footer-note">
-                <p>💚 最全的色情网站。 所有的网站都经过测试，安全且便于寻找！</p>
+                <p>💚 最全的网站。 所有的网站都经过测试，安全且便于寻找！</p>
                 <div class="stats">
                     <div class="stat-item">
                         <div class="stat-value">1280+</div>
@@ -1455,24 +1448,6 @@
             });
         });
         
-        // 搜索功能模拟
-        const searchInput = document.querySelector('.search-box input');
-        const searchButton = document.querySelector('.search-box button');
-        
-        searchButton.addEventListener('click', function() {
-            if (searchInput.value.trim() !== '') {
-                alert(`搜索内容: ${searchInput.value}\n在实际应用中，这里将执行搜索功能`);
-            } else {
-                searchInput.focus();
-            }
-        });
-        
-        searchInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter' && this.value.trim() !== '') {
-                alert(`搜索内容: ${this.value}\n在实际应用中，这里将执行搜索功能`);
-            }
-        });
-        
         // 添加面板悬停效果
         document.querySelectorAll('.panel').forEach(panel => {
             panel.addEventListener('mouseenter', function() {
@@ -1493,6 +1468,7 @@
             stat.addEventListener('mouseleave', function() {
                 this.style.animation = 'none';
             });
+        });
         });
     </script>
 </body>
